@@ -55,6 +55,9 @@ export default function Header() {
             <Button component={Link} href="/events" color="inherit">
               {t.header.events}
             </Button>
+            <Button component={Link} href="/experts" color="inherit">
+              {t.header.experts}
+            </Button>
             <Button component={Link} href="/membership" color="inherit">
               {t.header.membership}
             </Button>

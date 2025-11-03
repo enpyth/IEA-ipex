@@ -10,6 +10,7 @@ type Strings = {
     about: string
     products: string
     events: string
+    experts: string
     membership: string
     contact: string
     language: string
@@ -55,6 +56,7 @@ const en: Strings = {
     about: 'About Us',
     products: 'Products',
     events: 'Events',
+    experts: 'Experts',
     membership: 'Membership',
     contact: 'Contact Us',
     language: 'cn',
@@ -100,6 +102,7 @@ const zh: Strings = {
     about: '关于我们',
     products: '产品',
     events: '活动',
+    experts: '专家',
     membership: '会员',
     contact: '联系我们',
     language: 'en',

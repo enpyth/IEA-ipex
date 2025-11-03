@@ -21,8 +21,8 @@ export default function ExpertsSidebar({ selectedTagId, onTagSelect }: ExpertsSi
   }, []);
 
   return (
-    <div className="w-64 bg-gray-50 border-r border-gray-200 h-full">
-      <div className="p-6">
+    <div className="w-full md:w-64 bg-gray-50 border-r border-gray-200 h-full md:h-auto">
+      <div className="p-4 md:p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Categories</h2>
         <nav className="space-y-2">
           <button

@@ -262,6 +262,15 @@ export function ChatKitPanel({
   );
 
   const chatkit = useChatKit({
+    widgets: {
+      async onAction(action, item) {
+        if (action.type === "open.url") {
+          window.open(action.payload?.url as string, "_blank");
+        } else {
+          console.log(`Action Not Handled: ${action} | ${item}`);
+        }
+      },
+    },
     api: { getClientSecret },
     theme: {
       colorScheme: theme,

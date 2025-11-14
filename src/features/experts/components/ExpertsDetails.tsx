@@ -27,10 +27,17 @@ interface ExpertsDetailsProps {
   tagId: number | null;
 }
 
-// 生成专家唯一 ID（使用大学名称和索引，更可靠）
-function generateExpertId(universityKey: string, index: number): string {
-  const universityPart = universityKey.toLowerCase().replace(/\s+/g, '-').replace(' tag', '').replace(/[^a-z0-9-]/g, '');
-  return `${universityPart}-${index}`;
+// 生成专家唯一 ID（使用 orcid）
+function generateExpertId(profile: Profile): string {
+  if (profile.orcid) {
+    return profile.orcid;
+  }
+  // Fallback if orcid is not available
+  if (profile.university && profile.profileIndex !== undefined) {
+    const universityPart = profile.university.toLowerCase().replace(/\s+/g, '-').replace(' tag', '').replace(/[^a-z0-9-]/g, '');
+    return `${universityPart}-${profile.profileIndex}`;
+  }
+  return 'unknown';
 }
 
 export default function ExpertsDetails({ tagId }: ExpertsDetailsProps) {
@@ -80,10 +87,8 @@ export default function ExpertsDetails({ tagId }: ExpertsDetailsProps) {
   }, [tagId]);
 
   const handleCardClick = (profile: Profile) => {
-    if (profile.university && profile.profileIndex !== undefined) {
-      const expertId = generateExpertId(profile.university, profile.profileIndex);
-      router.push(`/experts/${encodeURIComponent(expertId)}`);
-    }
+    const expertId = generateExpertId(profile);
+    router.push(`/experts/${encodeURIComponent(expertId)}`);
   };
 
   return (
@@ -98,9 +103,7 @@ export default function ExpertsDetails({ tagId }: ExpertsDetailsProps) {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {profiles.map((profile, index) => {
-              const expertId = profile.university && profile.profileIndex !== undefined
-                ? generateExpertId(profile.university, profile.profileIndex)
-                : `expert-${index}`;
+              const expertId = generateExpertId(profile) || `expert-${index}`;
               
               return (
                 <Card 

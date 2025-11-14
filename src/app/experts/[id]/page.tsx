@@ -33,50 +33,63 @@ export default function ExpertDetailPage() {
   useEffect(() => {
     const expertId = decodeURIComponent(params.id as string);
     
-    // ID 格式: university-name-index (例如: southern-cross-university-0)
-    // 从 ID 中提取索引（最后一个数字，可能有多位）
-    const parts = expertId.split('-');
-    let index: number | null = null;
-    let indexStart = -1;
-    
-    // 从末尾向前查找，找到第一个全数字的部分作为索引
-    for (let i = parts.length - 1; i >= 0; i--) {
-      const part = parts[i];
-      if (/^\d+$/.test(part)) {
-        index = parseInt(part, 10);
-        indexStart = i;
-        break;
-      }
-    }
-    
-    if (index === null || indexStart === -1) {
-      setLoading(false);
-      return;
-    }
-    
-    // 提取大学部分的 ID（索引之前的所有部分）
-    const universityIdParts = parts.slice(0, indexStart);
-    const universityId = universityIdParts.join('-');
-    
     // 查找匹配的专家
     let foundProfile: Profile | null = null;
     let foundUniversity = "";
     
+    // 首先尝试通过 orcid 查找（新格式）
     Object.entries(expertsData).forEach(([universityKey, universityData]: [string, any]) => {
-      // 生成大学部分的 ID
-      const expectedUniversityId = universityKey.toLowerCase().replace(/\s+/g, '-').replace(' tag', '').replace(/[^a-z0-9-]/g, '');
-      
-      // 检查 ID 是否匹配大学名称
-      if (universityId === expectedUniversityId) {
-        if (universityData.cleaned_profiles && Array.isArray(universityData.cleaned_profiles)) {
-          // 使用索引直接获取专家
-          if (index >= 0 && index < universityData.cleaned_profiles.length) {
-            foundProfile = universityData.cleaned_profiles[index];
-            foundUniversity = universityKey.replace(' tag', '');
-          }
+      if (universityData.cleaned_profiles && Array.isArray(universityData.cleaned_profiles)) {
+        const profile = universityData.cleaned_profiles.find(
+          (p: Profile) => p.orcid === expertId
+        );
+        if (profile) {
+          foundProfile = profile;
+          foundUniversity = universityKey.replace(' tag', '');
         }
       }
     });
+    
+    // 如果通过 orcid 没找到，尝试旧格式（向后兼容）
+    if (!foundProfile) {
+      // ID 格式: university-name-index (例如: southern-cross-university-0)
+      // 从 ID 中提取索引（最后一个数字，可能有多位）
+      const parts = expertId.split('-');
+      let index: number | null = null;
+      let indexStart = -1;
+      
+      // 从末尾向前查找，找到第一个全数字的部分作为索引
+      for (let i = parts.length - 1; i >= 0; i--) {
+        const part = parts[i];
+        if (/^\d+$/.test(part)) {
+          index = parseInt(part, 10);
+          indexStart = i;
+          break;
+        }
+      }
+      
+      if (index !== null && indexStart !== -1) {
+        // 提取大学部分的 ID（索引之前的所有部分）
+        const universityIdParts = parts.slice(0, indexStart);
+        const universityId = universityIdParts.join('-');
+        
+        Object.entries(expertsData).forEach(([universityKey, universityData]: [string, any]) => {
+          // 生成大学部分的 ID
+          const expectedUniversityId = universityKey.toLowerCase().replace(/\s+/g, '-').replace(' tag', '').replace(/[^a-z0-9-]/g, '');
+          
+          // 检查 ID 是否匹配大学名称
+          if (universityId === expectedUniversityId) {
+            if (universityData.cleaned_profiles && Array.isArray(universityData.cleaned_profiles)) {
+              // 使用索引直接获取专家
+              if (index >= 0 && index < universityData.cleaned_profiles.length) {
+                foundProfile = universityData.cleaned_profiles[index];
+                foundUniversity = universityKey.replace(' tag', '');
+              }
+            }
+          }
+        });
+      }
+    }
 
     setProfile(foundProfile);
     setUniversity(foundUniversity);

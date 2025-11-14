@@ -49,7 +49,7 @@ export default function Hero({ imageSrc = "", title, subtitle, showCTA = false }
               <Box sx={{ mt: 4 }}>
                 <Button
                   component={Link}
-                  href="/contact"
+                  href="/chatkit"
                   variant="contained"
                   size="large"
                   endIcon={<ArrowForwardIcon />}

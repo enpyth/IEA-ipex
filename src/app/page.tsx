@@ -11,8 +11,9 @@ export default function HomePage() {
     <main>
       <Hero 
         imageSrc="/banner/banner-about.jpeg" 
-        title="Welcome to NovaTech Solutions"
-        subtitle="Empowering businesses with innovative technology solutions"
+        title="Welcome to OZ Health Global"
+        // subtitle="Empowering businesses with innovative technology solutions"
+        subtitle=""
         showCTA={true}
       />
       <Introduction />

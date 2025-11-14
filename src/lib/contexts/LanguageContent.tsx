@@ -50,7 +50,7 @@ type Strings = {
 
 const en: Strings = {
   header: {
-    siteTitle: 'Site Title',
+    siteTitle: 'OZHG',
     login: 'Login',
     home: 'Home',
     about: 'About Us',
@@ -96,7 +96,7 @@ const en: Strings = {
 
 const zh: Strings = {
   header: {
-    siteTitle: '站点标题',
+    siteTitle: '澳洲健康全球通——数据库平台',
     login: '登录',
     home: '首页',
     about: '关于我们',

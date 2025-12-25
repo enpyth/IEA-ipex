@@ -18,8 +18,51 @@ const META_THEME_COLORS = {
 };
 
 export const metadata: Metadata = {
-  title: 'Next Shadcn',
-  description: 'Basic dashboard with Next.js and Shadcn'
+  title: {
+    default: 'OZHG Platform - Australia\'s Next-Gen AI-Driven Health Expert Intelligence Engine',
+    template: '%s | OZHG'
+  },
+  description: 'OZHG Platform breaks down fragmented health expert data across 43+ Australian universities and institutions, connecting industry, government, and researchers with the right niche experts for specific health challenges through AI-driven intelligence.',
+  keywords: [
+    'OZHG',
+    'OZ HEALTH GLOBE',
+    'Australia health experts',
+    'AI health intelligence',
+    'health research collaboration',
+    'health expert database',
+    'health innovation',
+    'AI-driven health platform',
+    'Australian health research'
+  ],
+  authors: [
+    {
+      name: 'OZHG Team',
+      url: 'https://www.ozhg.com.au'
+    }
+  ],
+  creator: 'OZHG Team',
+  publisher: 'OZHG Platform',
+  metadataBase: new URL('https://www.ozhg.com.au'),
+  openGraph: {
+    type: 'website',
+    locale: 'en_AU',
+    url: 'https://www.ozhg.com.au',
+    title: 'OZHG Platform - Australia\'s Next-Gen AI-Driven Health Expert Intelligence Engine',
+    description: 'OZHG Platform breaks down fragmented health expert data across 43+ Australian universities and institutions, connecting industry, government, and researchers with the right niche experts for specific health challenges through AI-driven intelligence.',
+    siteName: 'OZHG Platform'
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'OZHG Platform - Australia\'s Next-Gen AI-Driven Health Expert Intelligence Engine',
+    description: 'OZHG Platform breaks down fragmented health expert data across 43+ Australian universities and institutions, connecting industry, government, and researchers with the right niche experts for specific health challenges through AI-driven intelligence.'
+  },
+  alternates: {
+    canonical: 'https://www.ozhg.com.au'
+  },
+  robots: {
+    index: true,
+    follow: true
+  }
 };
 
 export const viewport: Viewport = {
